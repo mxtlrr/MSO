@@ -16,7 +16,7 @@ mso:
 	$(AS) $(AS_FLAGS) src/boot/boot.s -o obj/boot.o
 	$(CC) -c src/kernel/kernel.c -o obj/kernel.o $(CFLAGS)
 
-	$(CC) -Tsrc/linker.ld -o bin/mso.bin -ffreestanding -O2 -nostdlib $(OBJS) -lgcc
+	$(CC) -m32 -Tsrc/linker.ld -o bin/mso.bin -ffreestanding -O2 -nostdlib $(OBJS) -lgcc
 
 mkiso:
 	mkdir -p isoroot/boot/grub
