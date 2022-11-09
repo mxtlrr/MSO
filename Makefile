@@ -6,7 +6,8 @@ CFLAGS	 := -m32 -ffreestanding -O2 -Wall -Wextra -std=gnu99 -Iinclude/
 
 all: clean mso mkiso
 
-OBJS := obj/boot.o obj/kernel.o
+override OBJS := $(shell find ./obj/ -type f -name '*.o')
+override CFILES := $(shell find ./ -type f -name '*.c')
 
 clean:
 	rm -rf obj/ bin/ mso.iso isoroot/
@@ -14,8 +15,8 @@ clean:
 mso:
 	mkdir -p obj/ bin/
 	$(AS) $(AS_FLAGS) src/boot/boot.s -o obj/boot.o
-	$(CC) -c src/kernel/kernel.c -o obj/kernel.o $(CFLAGS)
-
+	$(foreach file, $(CFILES), $(CC) $(CFLAGS) -c $(file) -o obj/$(basename $(notdir $(file))).o;)
+	
 	$(CC) -m32 -Tsrc/linker.ld -o bin/mso.bin -ffreestanding -O2 -nostdlib $(OBJS) -lgcc
 
 mkiso:
