@@ -2,7 +2,7 @@ AS 	 := as
 AS_FLAGS := --32
 
 CC	 := gcc
-CFLAGS	 := -m32 -ffreestanding -O2 -Wall -Wextra -std=gnu99
+CFLAGS	 := -m32 -ffreestanding -O2 -Wall -Wextra -std=gnu99 -Iinclude/
 
 all: clean mso mkiso
 
