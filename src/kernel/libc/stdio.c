@@ -4,18 +4,12 @@
 #include <stddef.h>
 #include <stdint.h>
 
-static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg) {
+uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg) {
   return fg | bg << 4;
 }
 
-static inline uint16_t vga_entry(unsigned char uc, uint8_t color) {
+uint16_t vga_entry(unsigned char uc, uint8_t color) {
   return (uint16_t) uc | (uint16_t) color << 8;
-}
-
-size_t strlen(const char* str) {
-  size_t len = 0;
-  while (str[len]) len++;
-  return len;
 }
 
 static const size_t VGA_WIDTH = 80;
@@ -25,6 +19,12 @@ size_t terminal_row;
 size_t terminal_column;
 uint8_t terminal_color;
 uint16_t* terminal_buffer;
+
+size_t strlen(const char* str) {
+	size_t len = 0;
+	while (str[len]) len++;
+	return len;
+}
 
 void terminal_initialize(void) {
   terminal_row = 0;
@@ -57,10 +57,38 @@ void terminal_putchar(char c){
   }
 }
 
-void terminal_write(const char* data, size_t size) {
-  for (size_t i = 0; i < size; i++) terminal_putchar(data[i]);
-}
+void terminal_write(const char* data, size_t size){ for(size_t i = 0; i < size; i++) terminal_putchar(data[i]); }
 
-void terminal_writestring(const char* data) {
+void puts(char* data) {
   terminal_write(data, strlen(data));
 }
+
+
+void printf(char* fmt, ...){
+  va_list ap;
+  va_start(ap, fmt);
+  char* ptr;
+
+  for (ptr = fmt; *ptr != '\0'; ++ptr) {
+    if (*ptr == '%') {
+      ++ptr;
+      switch (*ptr) {
+        case 's':
+          puts(va_arg(ap, char*));
+          break;
+        
+        case 'd':
+          puts(itoa(va_arg(ap, int), 10));
+          break;
+
+        case 'x':
+          puts(itoa(va_arg(ap, uint32_t), 16));
+          break;
+      }
+    } else {
+      char terminated[2] = {*ptr, 0};
+      puts(terminated);
+    }
+  }
+}
+
