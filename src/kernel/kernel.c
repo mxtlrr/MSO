@@ -6,5 +6,5 @@
 
 void kmain(){
   terminal_initialize();
-  printf("Hex -> 0x%x\n", 0xface);
+  printf("Hello world!\n");
 }
