@@ -7,6 +7,7 @@
 
 /* architecture specific stuff */
 #include "arch/gdt.h"
+#include "arch/idt.h"
 
 void kmain(multiboot_info_t* mbd, uint32_t magic){
   printf("Hello world!\n\n");
