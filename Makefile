@@ -2,7 +2,7 @@ AS 	 := as
 AS_FLAGS := --32
 
 CC	 := gcc
-CFLAGS	 := -m32 -ffreestanding -O2 -Wall -Wextra -std=gnu99 -Iinclude/ -fno-stack-protector
+CFLAGS	 := -m32 -ffreestanding -O2 -std=gnu99 -Iinclude/ -fno-stack-protector -nostdlib
 
 all: clean mso mkiso
 
