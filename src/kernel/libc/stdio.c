@@ -6,8 +6,8 @@
 
 uint16_t *video_memory = (uint16_t*)0xB8000;
 
-static const size_t VGA_WIDTH = 80;
-static const size_t VGA_HEIGHT = 25;
+const size_t VGA_WIDTH = 80;
+const size_t VGA_HEIGHT = 25;
 
 size_t terminal_row;
 size_t terminal_column;
@@ -20,7 +20,7 @@ size_t strlen(const char* str) {
 	return len;
 }
 
-static void scroll(){
+void scroll(){
    // Get a space character with the default colour attributes.
    uint8_t attributeByte = (0 /*black*/ << 4) | (15 /*white*/ & 0x0F);
    uint16_t blank = 0x20 /* space */ | (attributeByte << 8);

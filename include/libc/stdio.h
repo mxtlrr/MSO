@@ -34,4 +34,4 @@ void terminal_writestring(const char* data);
 size_t strlen(const char* str);
 void printf(char* fmt, ...);
 
-static void scroll();
+void scroll();
