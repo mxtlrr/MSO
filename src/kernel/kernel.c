@@ -4,6 +4,7 @@
 
 #include "libc/stdio.h"
 #include "mem/mmap.h"
+#include "mem/mm.h"
 #include "multiboot.h"
 
 void kmain(multiboot_info_t* mbd, uint32_t magic){
@@ -16,4 +17,7 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
   // test malloc
   uint32_t m = malloc(b, 4); // allocate 4 bytes
   printf("\n\n4 bytes have been allocated to location: 0x%x", m);
+
+  // okay, now let's free this memory
+  free(m);
 }

@@ -30,3 +30,18 @@ uint32_t malloc(block_t* b, uint32_t size){
   iterators++;
   return (uint32_t)hole; // maybe
 }
+
+void free(uint32_t n){
+  int k = 0; // position
+
+  for(int i = 0; i != (sizeof(blocks)/sizeof(blocks[0])); i++){
+    if(blocks[i].start_addr = n){
+      k = i;
+      break;
+    } else continue;
+  }
+
+  // set as free, then leave.
+  blocks[k].type = 1;   // multiboot free
+  printf("\nFreed\n");
+}
