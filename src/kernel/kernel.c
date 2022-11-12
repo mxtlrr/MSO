@@ -3,16 +3,13 @@
 #include <stdint.h>
 
 #include "libc/stdio.h"
-
-/* memory */
-#include "mem/mmap.h"
-#include "mem/mm.h"
 #include "multiboot.h"
 
-extern void load_gdt();
+/* architecture specific stuff */
+#include "arch/gdt.h"
 
-void kmain(){
-  printf("Hello world!\n\nMemory map:\n");
+void kmain(multiboot_info_t* mbd, uint32_t magic){
+  printf("Hello world!\n\n");
 
   // Load gdt
   load_gdt();
