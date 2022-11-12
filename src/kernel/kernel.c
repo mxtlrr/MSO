@@ -25,4 +25,5 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
 
   // yuh!
   load_gdt();
+  printf("GDT has been enabled!!");
 }

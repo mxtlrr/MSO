@@ -6,7 +6,8 @@ CFLAGS	 := -m32 -ffreestanding -O2 -std=gnu99 -Iinclude/ -fno-stack-protector -n
 
 # (i'm not good at GNU AS)
 NASM_AS  := nasm
-NASM_ASF := -felf32 -Iinclude/
+NASM_ASF := -felf32
+
 
 all: clean mso mkiso
 
