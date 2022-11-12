@@ -11,6 +11,4 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
 
   // Now we have the memory map!
   block_t* b = getmmap(mbd, magic);
-
-  // print out memory map
 }
