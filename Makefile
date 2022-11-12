@@ -38,3 +38,11 @@ mkiso:
 	cp bin/mso.bin isoroot/boot/mso.bin
 	cp src/boot/grub.cfg isoroot/boot/grub/grub.cfg
 	grub-mkrescue -o mso.iso isoroot
+
+
+run: mso.iso
+	qemu-system-x86_64 -cdrom mso.iso
+
+run-debug: mso.iso
+	qemu-system-x86_64 -cdrom mso.iso -d int -M smm=off -no-shutdown -no-reboot
+
