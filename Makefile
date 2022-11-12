@@ -15,7 +15,7 @@ clean:
 mso:
 	mkdir -p obj/ bin/
 	$(AS) $(AS_FLAGS) src/boot/boot.s -o obj/boot.o
-	$(foreach file, $(CFILES), $(CC) $(CFLAGS) -c $(file) -o obj/$(basename $(notdir $(file))).o;)
+	@$(foreach file, $(CFILES), $(CC) $(CFLAGS) -c $(file) -o obj/$(basename $(notdir $(file))).o; echo CC $(file);)
 	
 	$(CC) -m32 -Tsrc/linker.ld -o bin/mso.bin -ffreestanding -O2 -nostdlib -fno-stack-protector $(OBJS) -lgcc
 
