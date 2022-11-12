@@ -20,6 +20,10 @@ typedef struct {
   uint32_t base;
 }__attribute__((packed)) idtr_t;
 
+
+__attribute__((noreturn))
+void exception_handler(void);
+
 void idt_set_descriptor(uint8_t vector, void* isr, uint8_t flags);
 
 extern void* isr_stub_table[];

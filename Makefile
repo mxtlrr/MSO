@@ -18,9 +18,8 @@ override CFILES    := $(shell find ./ -type f -name '*.c')
 override ASMFILES  := $(shell find ./include/ -type f -name '*.s')
 override ASM2FILES := $(shell find ./src/kernel/ -type f -name '*.s')
 
-
 clean:
-	rm -rf obj/ bin/ mso.iso isoroot/
+	rm -rf bin/ mso.iso isoroot/
 
 mso:
 	mkdir -p obj/ bin/
