@@ -1,3 +1,3 @@
 #pragma once
 
-char* atoi(int val, int base);
+char* atoi(unsigned int num, int base);
