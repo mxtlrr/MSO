@@ -29,7 +29,7 @@ typedef struct registers {
 } registers_t;
 
 __attribute__((noreturn))
-void exception_handler(void);
+void exception_handler(registers_t regs);
 
 void idt_set_descriptor(uint8_t vector, void* isr, uint8_t flags);
 

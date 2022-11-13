@@ -18,4 +18,6 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
 
   idt_init();
   printf("IDT has been enabled!!\n");
+
+  for(;;) asm("hlt");
 }

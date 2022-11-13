@@ -9,10 +9,11 @@ static idtr_t idtr;
 static bool vectors[256];
 
 __attribute__((noreturn))
-void exception_handler(){
+void exception_handler(registers_t regs){
   set_colors(4, 15); // white on red
-  printf("Exception has occurred. Halting...");
+  printf("unhandled exception:\nINT_NO: 0x%x", regs.int_no);
   __asm__("cli; hlt"); // Halt computer
+  for(;;);
 }
 
 void idt_set_descriptor(uint8_t vector, void* isr, uint8_t flags){
