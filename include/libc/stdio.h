@@ -35,3 +35,5 @@ size_t strlen(const char* str);
 void printf(char* fmt, ...);
 
 void scroll();
+
+void set_colors(uint8_t bg, uint8_t fg);

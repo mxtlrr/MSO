@@ -47,11 +47,15 @@ void terminal_setcolor(uint8_t color) {
   terminal_color = color;
 }
 
-void terminal_putchar(char c){
-   // The background colour is black (0), the foreground is white (15).
-   uint8_t backColour = 0;
-   uint8_t foreColour = 15;
+uint8_t backColour = 0;
+uint8_t foreColour = 15;
 
+void set_colors(uint8_t bg, uint8_t fg){
+  backColour = bg;
+  foreColour = fg;
+}
+
+void terminal_putchar(char c){
    // The attribute byte is made up of two nibbles - the lower being the
    // foreground colour, and the upper the background colour.
    uint8_t attributeByte = (backColour << 4) | (foreColour & 0x0F);
