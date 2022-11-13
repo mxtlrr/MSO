@@ -40,8 +40,8 @@ mkiso:
 
 
 run: mso.iso
-	qemu-system-x86_64 -cdrom mso.iso
+	qemu-system-i386 -cdrom mso.iso
 
 run-debug: mso.iso
-	qemu-system-x86_64 -cdrom mso.iso -d int -M smm=off -no-shutdown -no-reboot
+	qemu-system-i386 -cdrom mso.iso -d int -M smm=off -no-shutdown -no-reboot -monitor stdio
 
