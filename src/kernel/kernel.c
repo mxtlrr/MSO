@@ -25,8 +25,11 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
   set_colors(0x0, 0x7);
   init_kbd();
 
-  kassert(3>4);
-  kassert(3<4);
+  kassert(mbd->mods_count > 0); // has the module been loaded?
+  uint32_t initrd_loc = *((uint32_t*)mbd->mods_addr);
+  uint32_t initrd_end = *(uint32_t*)(mbd->mods_addr+4);
+
+  printf("Initrd location -> 0x%x. Ends at 0x%x.\n", initrd_loc, initrd_end);
 
   for(;;) asm("hlt");
 }

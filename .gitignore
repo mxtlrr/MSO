@@ -3,3 +3,4 @@ isoroot/
 obj/
 
 mso.iso
+initrd.img
