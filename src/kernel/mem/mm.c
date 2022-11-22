@@ -1,47 +1,29 @@
 #include "mem/mm.h"
 
-block_t blocks[128];
-int   iterators = 0;
+void memcpy(void* destination, void* source, uint32_t num) {
+	if (num <= 8) {
+		uint8_t* valPtr = (uint8_t*)source;
+		for (uint8_t* ptr = (uint8_t*)destination; ptr < (uint8_t*)((uint32_t)destination + num); ptr++) {
+			*ptr = *valPtr;
+			valPtr++;
+		}
 
-uint32_t find_hole(block_t* b, uint32_t n){
-  // b should be an array so we can get the length of the array
-  // and loop through that.
-  int sz = (sizeof(b)/sizeof(b[0]));
-  for(int i = 0; i != 7; i++){ // assume 7 but idk
-    if(b[i].size > n) return b[i].start_addr;
-  }
+		return;
+	}
 
-  // If we're still here, either:
-  // -> Not enough space
-  // -> Allocated size too big
-  return 0x0;
-}
+	uint32_t proceedingBytes = num % 8;
+	uint32_t newnum = num - proceedingBytes;
+	uint32_t* srcptr = (uint32_t*)source;
 
-uint32_t malloc(block_t* b, uint32_t size){
-  uint32_t hole = find_hole(b, size);
-  if(hole == 0x0) return 0x0; // what!
+	for (uint32_t* destptr = (uint32_t*)destination; destptr < (uint32_t*)((uint32_t)destination + newnum); destptr++) {
+		*destptr = *srcptr;
+		srcptr++;
+	}
 
-  // Add to block
-  blocks[iterators].start_addr = (uint32_t)hole;
-  blocks[iterators].end_addr   = (uint32_t)hole+size;
-  blocks[iterators].size       = (uint32_t)blocks[iterators].end_addr-blocks[iterators].start_addr;
-  blocks[iterators].type       = 2;   // Reserved! [it is not free]
-  
-  iterators++;
-  return (uint32_t)hole; // maybe
-}
+	uint8_t* srcptr8 = (uint8_t*)((uint32_t)source + newnum);
+	for (uint8_t* destptr8 = (uint8_t*)((uint32_t)destination + newnum); destptr8 < (uint8_t*)((uint32_t)destination + num); destptr8++){
+		*destptr8 = *srcptr8;
+		srcptr8++;
+	}
 
-void free(uint32_t n){
-  int k = 0; // position
-
-  for(int i = 0; i != (sizeof(blocks)/sizeof(blocks[0])); i++){
-    if(blocks[i].start_addr = n){
-      k = i;
-      break;
-    } else continue;
-  }
-
-  // set as free, then leave.
-  blocks[k].type = 1;   // multiboot free
-  printf("\nFreed\n");
 }

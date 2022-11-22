@@ -1,6 +1,10 @@
 #pragma once
 
-typedef char  byte
+#include <stdint.h>
+#include "mem/mm.h"
+#include "fs/fs.h"
+
+typedef char  byte;
 typedef short word;
 
 typedef struct {
@@ -17,5 +21,5 @@ typedef struct {
 
 fs_node_t* init_initrd(uint32_t location);
 fs_node_t *initrd_finddir(fs_node_t *node, char *name);
-struct dirent *initrd_readdir(fs_note_t* node, uint32_t index);
+struct dirent *initrd_readdir(fs_node_t* node, uint32_t index);
 uint32_t initrd_read(fs_node_t *node, uint32_t offset, uint32_t size, uint8_t *buffer);
