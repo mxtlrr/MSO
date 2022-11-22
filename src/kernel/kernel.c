@@ -12,7 +12,12 @@
 /* interrupts */
 #include "arch/interrupts/irq1.h"
 
+/* filesystem */
+#include "fs/fs.h"
+
 void kmain(multiboot_info_t* mbd, uint32_t magic){
+  fs_node_t* fs_root = 0; // root of fs
+
   printf("Hello world!\n\n");
 
   // Load gdt
@@ -30,6 +35,7 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
   uint32_t initrd_end = *(uint32_t*)(mbd->mods_addr+4);
 
   printf("Initrd location -> 0x%x. Ends at 0x%x.\n", initrd_loc, initrd_end);
+  fs_root = init_initrd(initrd_loc);
 
   for(;;) asm("hlt");
 }
