@@ -6,7 +6,7 @@
 
 typedef void (*isr_t)(registers_t);
 
-void reg_int_handle(uint8_t n, isr_t handler);
+void reg_int_handler(uint8_t n, isr_t handler);
 //                  IRQ Number Function for Handler
 
 #define IRQ0 32
