@@ -22,6 +22,7 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
   init_idt();
   printf("IDT has been enabled!!\n");
 
+  set_colors(0x0, 0x7);
   init_kbd();
 
   for(;;) asm("hlt");

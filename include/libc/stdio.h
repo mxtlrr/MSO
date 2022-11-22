@@ -1,6 +1,7 @@
 #pragma once
 
 #include "libc/string.h"
+#include "io.h"
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -37,3 +38,5 @@ void printf(char* fmt, ...);
 void scroll();
 
 void set_colors(uint8_t bg, uint8_t fg);
+
+void move_cursor();

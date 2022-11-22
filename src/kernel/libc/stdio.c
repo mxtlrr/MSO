@@ -20,6 +20,14 @@ size_t strlen(const char* str) {
 	return len;
 }
 
+void move_cursor(){
+  uint16_t curPos = terminal_column * 80 + terminal_row;
+  outb(0x3d4, 14);
+  outb(0x3d5, curPos >> 8);
+  outb(0x3d4, 15);
+  outb(0x3d5, curPos);
+}
+
 void scroll(){
    // Get a space character with the default colour attributes.
    uint8_t attributeByte = (0 /*black*/ << 4) | (15 /*white*/ & 0x0F);
@@ -88,6 +96,7 @@ void terminal_putchar(char c){
 
    // Scroll the screen if needed.
    scroll();
+   move_cursor();
 }
 
 void puts(char* data) {
