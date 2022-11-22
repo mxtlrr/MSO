@@ -21,9 +21,12 @@ override ASM2FILES := $(shell find ./src/kernel/ -type f -name '*.s')
 clean:
 	rm -rf bin/ mso.iso isoroot/
 
+override INITRD_FILES := $(shell find ./initrd_src/test_files/ -type f)
+
 mso:
 	mkdir -p obj/ bin/
 	make -C initrd_src
+	./bin/initrd-gen $(INITRD_FILES)
 
 	$(AS) $(AS_FLAGS) src/boot/boot.s -o obj/boot.o
 	@$(foreach file, $(CFILES), $(CC) $(CFLAGS) -c $(file) -o obj/$(basename $(notdir $(file))).o; echo CC $(file);)
@@ -36,6 +39,7 @@ mso:
 mkiso:
 	mkdir -p isoroot/boot/grub
 	cp bin/mso.bin isoroot/boot/mso.bin
+	cp initrd.img  isoroot/boot/initrd.img
 	cp src/boot/grub.cfg isoroot/boot/grub/grub.cfg
 	grub-mkrescue -o mso.iso isoroot
 
