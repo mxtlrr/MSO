@@ -5,35 +5,28 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include <arch/isr.h> /* isr handler */
+#include <arch/irq.h> /* irq handler */
+
 #define KERNEL_CS 0x08 // :)
 
-typedef struct {
-  uint16_t isr_low;
-  uint16_t kernel_cs;
-  uint8_t  reserved;
-  uint8_t  attrib;
-  uint16_t isr_high;
-}__attribute__((packed)) idt_entry_t;
+struct idt_entry_struct {
+	uint16_t base_low;
+	uint16_t sel;
+	uint8_t  zero;
+	uint8_t  flags;
+	uint16_t base_high;
+}__attribute__((packed));
+typedef struct idt_entry_struct idt_entry_t;
 
-typedef struct {
-  uint16_t limit;
-  uint32_t base;
-}__attribute__((packed)) idtr_t;
+struct idt_ptr_struct {
+	uint16_t limit;
+	uint32_t base;
+}__attribute__((packed));
+typedef struct idt_ptr_struct idt_ptr_t;
 
 
-typedef struct registers {
-   uint32_t ds;                  // Data segment selector
-   uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax; // Pushed by pusha.
-   uint32_t int_no, err_code;    // Interrupt number and error code (if applicable)
-   uint32_t eip, cs, eflags, useresp, ss; // Pushed by the processor automatically.
-} registers_t;
+extern void idt_flush(uint32_t);
 
-__attribute__((noreturn))
-void exception_handler(registers_t regs);
-
-void idt_set_descriptor(uint8_t vector, void* isr, uint8_t flags);
-
-extern void* isr_stub_table[];
-void idt_init(void);
-
-void irq_handler(registers_t regs);
+void init_idt();
+void idt_set_gate(uint8_t, uint32_t, uint16_t, uint8_t);
