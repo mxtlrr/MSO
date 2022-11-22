@@ -2,7 +2,7 @@ AS 	     := as
 AS_FLAGS := --32
 
 CC	 		 := gcc
-CFLAGS	 := -m32 -ffreestanding -O2 -std=gnu99 -Iinclude/ -fno-stack-protector -nostdlib
+CFLAGS	 := -m32 -ffreestanding -O2 -std=gnu99 -Iinclude/ -fno-stack-protector -nostdlib -g
 
 # (i'm not good at GNU AS)
 NASM_AS  := nasm
@@ -30,7 +30,7 @@ mso:
 	@$(foreach file, $(ASM2FILES), $(NASM_AS) $(NASM_ASF) $(file) -o obj/$(basename $(notdir $(file))).o; echo NASM $(file);)
 	
 
-	$(CC) -m32 -Tsrc/linker.ld -o bin/mso.bin -ffreestanding -O2 -nostdlib -fno-stack-protector $(OBJS) -lgcc
+	$(CC) -m32 -g -Tsrc/linker.ld -o bin/mso.bin -ffreestanding -O2 -nostdlib -fno-stack-protector $(OBJS) -lgcc
 
 mkiso:
 	mkdir -p isoroot/boot/grub
