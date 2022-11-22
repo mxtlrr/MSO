@@ -14,7 +14,7 @@ all: clean mso mkiso
 override OBJS := $(shell find ./obj/ -type f -name '*.o')
 
 # Source files
-override CFILES    := $(shell find ./ -type f -name '*.c')
+override CFILES    := $(shell find ./src/ -type f -name '*.c')
 override ASMFILES  := $(shell find ./include/ -type f -name '*.s')
 override ASM2FILES := $(shell find ./src/kernel/ -type f -name '*.s')
 
@@ -23,6 +23,7 @@ clean:
 
 mso:
 	mkdir -p obj/ bin/
+	make -C initrd_src
 
 	$(AS) $(AS_FLAGS) src/boot/boot.s -o obj/boot.o
 	@$(foreach file, $(CFILES), $(CC) $(CFLAGS) -c $(file) -o obj/$(basename $(notdir $(file))).o; echo CC $(file);)
