@@ -11,3 +11,4 @@ void init_kbd();
 
 // Function that gets called whenever there's
 // a keyboard int.
+void kbd_handle();
