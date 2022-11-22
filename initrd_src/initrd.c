@@ -8,7 +8,7 @@ typedef char  byte;
 typedef short word;
 
 #define MAGIC_NUM 0x3377
-#define ENDING    0x00
+#define ENDING    0xFF
 
 struct initrd_header {
   word magic;   // 0x3377
@@ -20,7 +20,7 @@ struct initrd_header {
 
 int main(int argc, char** argv){
   int nfiles = argc-1;
-  printf("I am adding %d files to the initrd file.", nfiles);
+  printf("I am adding %d files to the initrd file.\n", nfiles);
   
   struct initrd_header hdrs[nfiles];
   uint32_t off = sizeof(struct initrd_header) * nfiles + sizeof(int);
