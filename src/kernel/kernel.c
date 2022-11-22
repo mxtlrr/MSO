@@ -25,5 +25,8 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
   set_colors(0x0, 0x7);
   init_kbd();
 
+  kassert(3>4);
+  kassert(3<4);
+
   for(;;) asm("hlt");
 }

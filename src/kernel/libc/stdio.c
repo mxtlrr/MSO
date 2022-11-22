@@ -132,3 +132,15 @@ void printf(char* fmt, ...){
   }
 }
 
+
+void assertFailed(char* file, int line, char* failed_expr){
+  set_colors(0x0, 0x4);
+  printf("ASSERTION \"%s\" FAILED (IN FILE %s, ON LINE %d)\n", failed_expr, file, line);
+  set_colors(0x0, 0x7);
+}
+
+void assertSucess(char* successful_expr){
+  set_colors(0x0, 0xa);
+  printf("The assertion of \"%s\" is true.\n", successful_expr);
+  set_colors(0x0, 0x7);
+}

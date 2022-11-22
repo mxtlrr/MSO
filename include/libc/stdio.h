@@ -40,3 +40,10 @@ void scroll();
 void set_colors(uint8_t bg, uint8_t fg);
 
 void move_cursor();
+
+#define kassert(expr)\
+  if(!(expr)) assertFailed(__FILE__, __LINE__, #expr);\
+  else assertSucess(#expr)\
+
+void assertFailed(char* file, int line, char* failed_expr);
+void assertSucess(char* successful_expr);
