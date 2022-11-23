@@ -1,5 +1,28 @@
 #include "mem/mm.h"
 
+struct m_seg_hdr* FirstfreeMemorySegment;
+
+
+// initalize the heap, where the starting position is heap_addr and ends at
+// heap_len + heap_addr
+void init_heap(uint32_t heap_addr, uint32_t heap_len) {
+	FirstfreeMemorySegment = (struct m_seg_hdr*)heap_addr;
+	FirstfreeMemorySegment->mem_len = heap_len - sizeof(struct m_seg_hdr);
+	FirstfreeMemorySegment->next_seg = 0;
+	FirstfreeMemorySegment->prev_seg = 0;
+	FirstfreeMemorySegment->n_free_seg = 0;
+	FirstfreeMemorySegment->prev_f_seg = 0;
+	FirstfreeMemorySegment->free = true;
+}
+
+// allocate size in bytes, then
+// set to 0.
+void* calloc(uint32_t size) {
+	void* mallocVal = malloc(size);
+	memset(mallocVal, 0, size);
+	return mallocVal;
+}
+
 void memcpy(void* destination, void* source, uint32_t num) {
 	if (num <= 8) {
 		uint8_t* valPtr = (uint8_t*)source;
