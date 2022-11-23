@@ -22,12 +22,9 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
 
   printf("Hello world!\n\n");
 
-  // Load gdt
+  // Load desc. tables.
   load_gdt();
-  printf("GDT has been enabled!!\n");
-
   init_idt();
-  printf("IDT has been enabled!!\n");
 
   // start up our heap
   init_heap(0x10000, 0x10000);
@@ -43,6 +40,21 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
   fs_root = init_initrd(initrd_loc);
 
   kassert(fs_root != NULL);
+
+  // why shouldn't we just look through the fs
+  int i = 0;
+  struct dirent* node = 0;
+  while((node = readdir_fs(fs_root, i)) != 0){
+    printf("File found! Name: \"%s\"\n", node->name);
+    fs_node_t *fsnode = finddir_fs(fs_root, node->name);
+
+    // copy the file contents into a buffer
+    char buf[256];
+    uint32_t sz = read_fs(fsnode, 0, 256, buf);
+
+    printf("contents are:\n\"%s\"..\n", buf);
+    i++;
+  }
 
   for(;;) asm("hlt");
 }
