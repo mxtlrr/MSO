@@ -1,6 +1,3 @@
-// shamelessly taken from abxxbo. (which...is also me!)
-// i will describe how i went from abxxbo->mxtlrr soon.
-
 #pragma once
 
 #include <stdint.h>
