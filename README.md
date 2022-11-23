@@ -17,3 +17,8 @@ make
 - `nasm`
 - `binutils`
 
+
+# Credits
+[abxxbo](https://github.com/abxxbo) for:
+- heap implementation
+- vfs
