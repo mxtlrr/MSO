@@ -4,6 +4,7 @@
 
 #include "libc/stdio.h"
 #include "multiboot.h"
+#include "mem/mm.h"
 
 /* architecture specific stuff */
 #include "arch/gdt.h"
@@ -26,6 +27,9 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
 
   init_idt();
   printf("IDT has been enabled!!\n");
+
+  // start up our heap
+  init_heap(0x10000, 0x10000);
 
   set_colors(0x0, 0x7);
   init_kbd();
