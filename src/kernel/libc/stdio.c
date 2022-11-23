@@ -104,6 +104,8 @@ void puts(char* data) {
 }
 
 
+#define putc(x) terminal_putchar(x)
+
 void printf(char* fmt, ...){
   va_list ap;
   va_start(ap, fmt);
@@ -118,11 +120,15 @@ void printf(char* fmt, ...){
           break;
         
         case 'd':
-          puts(itoa(va_arg(ap, int), 10));
+          puts((char*)itoa(va_arg(ap, uint32_t), 10));
           break;
 
         case 'x':
-          puts(itoa(va_arg(ap, uint32_t), 16));
+          puts((char*)itoa(va_arg(ap, uint32_t), 16));
+          break;
+
+        case 'c':
+          terminal_putchar(va_arg(ap, int));
           break;
       }
     } else {
