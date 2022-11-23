@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include "libc/string.h"
 
 // TODO: Rewrite the memory allocator.
 // This time, without depending on the grub shit.

@@ -15,6 +15,7 @@
 
 /* filesystem */
 #include "fs/fs.h"
+#include "fs/initrd.h"
 
 void kmain(multiboot_info_t* mbd, uint32_t magic){
   fs_node_t* fs_root = 0; // root of fs
@@ -40,6 +41,8 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
 
   printf("Initrd location -> 0x%x. Ends at 0x%x.\n", initrd_loc, initrd_end);
   fs_root = init_initrd(initrd_loc);
+
+  kassert(fs_root != NULL);
 
   for(;;) asm("hlt");
 }
