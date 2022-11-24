@@ -19,7 +19,7 @@ override ASMFILES  := $(shell find ./include/ -type f -name '*.s')
 override ASM2FILES := $(shell find ./src/kernel/ -type f -name '*.s')
 
 clean:
-	rm -rf bin/ mso.iso isoroot/ initrd.img
+	rm -rf bin/ mso.iso isoroot/ initrd.img obj/
 
 mso:
 	mkdir -p obj/ bin/
