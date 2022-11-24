@@ -36,7 +36,7 @@ mso:
 mkiso:
 	mkdir -p isoroot/boot/grub
 	cp bin/mso.bin isoroot/boot/mso.bin
-	cp initrd.img  isoroot/boot/initrd.img
+	cp bin/initrd.img isoroot/boot/initrd.img
 	cp src/boot/grub.cfg isoroot/boot/grub/grub.cfg
 	grub-mkrescue -o mso.iso isoroot
 

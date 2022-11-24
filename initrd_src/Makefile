@@ -5,6 +5,7 @@ all: initrd
 
 
 initrd:
-	@mkdir -p ../bin
-	@$(CC) initrd.c $(CFLAGS) -o ../bin/initrd-gen
-	@make -C test_files
+	@$(CC) initrd.c $(CFLAGS) -g -o initrd-gen
+	@./initrd-gen file.txt file.txt
+	@cp initrd.img ../bin/initrd.img	
+	@rm initrd-gen
