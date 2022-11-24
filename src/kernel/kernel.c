@@ -5,6 +5,7 @@
 #include "libc/stdio.h"
 #include "multiboot.h"
 #include "mem/mm.h"
+#include "mem/paging.h"
 
 /* architecture specific stuff */
 #include "arch/gdt.h"
@@ -16,6 +17,7 @@
 /* filesystem */
 #include "fs/fs.h"
 #include "fs/initrd.h"
+uint32_t placement_address;
 
 void kmain(multiboot_info_t* mbd, uint32_t magic){
   fs_node_t* fs_root = 0; // root of fs
@@ -27,6 +29,7 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
   init_idt();
 
   // start up our heap
+  setup_pg();
   init_heap(0x10000, 0x10000);
 
   set_colors(0x0, 0x7);
@@ -35,6 +38,7 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
   kassert(mbd->mods_count > 0); // has the module been loaded?
   uint32_t initrd_loc = *((uint32_t*)mbd->mods_addr);
   uint32_t initrd_end = *(uint32_t*)(mbd->mods_addr+4);
+  placement_address = initrd_end;
 
   printf("Initrd location -> 0x%x. Ends at 0x%x.\n", initrd_loc, initrd_end);
   fs_root = init_initrd(initrd_loc);
