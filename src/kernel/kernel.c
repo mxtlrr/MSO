@@ -44,7 +44,7 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
 
   // why shouldn't we just look through the fs
   struct dirent* node = 0;
-  for(int i = 0; (node = readdir_fs(fs_root, i)) != 0; i++){
+  for(int i = 0; (node = readdir_fs(fs_root, i)) != 0; i+=2){
     printf("File found! Name: \"%s\"\n", node->name);
     fs_node_t *fsnode = finddir_fs(fs_root, node->name);
 
@@ -52,9 +52,9 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
     char buf[256];
     uint32_t sz = read_fs(fsnode, 0, 256, buf);
 
-    printf("contents are:\n\"%s\"..\n", buf);
-    i++;
+    printf("contents are: \"%s\"", buf);
+    printf("\nFile size (without \\0) --> %d\n\n", sz-1);
   }
-
+  
   for(;;) asm("hlt");
 }
