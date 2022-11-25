@@ -13,9 +13,8 @@
 /* interrupts */
 #include "arch/interrupts/irq1.h"
 
-/* filesystem */
-#include "fs/fs.h"
-#include "fs/initrd.h"
+/* utilites */
+#include "libc/fsutil.h"
 
 uint32_t placement_address;
 
@@ -42,18 +41,10 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
 
   kassert(fs_root != NULL);
 
-  // why shouldn't we just look through the fs
-  struct dirent* node = 0;
-  for(int i = 0; (node = readdir_fs(fs_root, i)) != 0; i+=2){
-    printf("File found! Name: \"%s\"\n", node->name);
-    fs_node_t *fsnode = finddir_fs(fs_root, node->name);
-
-    // copy the file contents into a buffer
-    char buf[256];
-    uint32_t sz = read_fs(fsnode, 0, 256, buf);
-
-    printf("contents are: \"%s\"", buf);
-    printf("\nFile size (without \\0) --> %d\n\n", sz-1);
+  FILE* test = fopen("file.txt", "r", fs_root);
+  if(test == NULL) printf("Woops! File doesn't exist..\n");
+  else {
+    printf("mode -> %d\nfile name -> %s\n", test->mode, test->f);
   }
   
   for(;;) asm("hlt");

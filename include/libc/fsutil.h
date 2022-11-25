@@ -8,8 +8,8 @@
 
 // TODO: add more modes
 enum MODES {
-  MODE_R = 0; // read from the file
-  MODE_W = 1;
+  MODE_R = 0, // read from the file
+  MODE_W = 1
 };
 
 typedef struct {
@@ -24,14 +24,14 @@ typedef struct {
 // See if we can open the file for reading/writing.
 // If NULL returned, we can't open file (potentially
 // doesn't exist)
-FILE* fopen(char* fp, char* mode);
+FILE* fopen(char* fp, char* mode, fs_node_t* fs_root);
 
 // Write data to stream. If it cannot,
 // return NULL
-void fwrite(FILE* stream, char* data);
+void fwrite(FILE* stream, char* data, fs_node_t* fs_root);
 
 // Read data from stream. Return value is an
 // unsigned char array (we don't know if there
 // is any binary in the file). It will only read
 // "bytes" bytes.
-uint8_t* fread(FILE* stream, uint32_t bytes);
+uint8_t* fread(FILE* stream, uint32_t bytes, fs_node_t* fs_root);
