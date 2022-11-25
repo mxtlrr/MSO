@@ -28,9 +28,6 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
   load_gdt();
   init_idt();
 
-  // start up our heap
-  init_heap(0x10000, 0x10000);
-
   set_colors(0x0, 0x7);
   init_kbd();
 
@@ -38,16 +35,16 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
   uint32_t initrd_loc = *((uint32_t*)mbd->mods_addr);
   uint32_t initrd_end = *(uint32_t*)(mbd->mods_addr+4);
   placement_address = initrd_end;
-
-  printf("Initrd location -> 0x%x. Ends at 0x%x.\n", initrd_loc, initrd_end);
   fs_root = init_initrd(initrd_loc);
+
+  // start up our heap
+  init_heap(0x10000, 0x10000);
 
   kassert(fs_root != NULL);
 
   // why shouldn't we just look through the fs
-  int i = 0;
   struct dirent* node = 0;
-  while((node = readdir_fs(fs_root, i)) != 0){
+  for(int i = 0; (node = readdir_fs(fs_root, i)) != 0; i++){
     printf("File found! Name: \"%s\"\n", node->name);
     fs_node_t *fsnode = finddir_fs(fs_root, node->name);
 

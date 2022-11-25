@@ -1,7 +1,7 @@
 #include <fs/initrd.h>
 #include <libc/string.h>
 
-initrd_hdr_t *initrd_header;     // The header.
+initrd_header_t *initrd_header;     // The header.
 initrd_file_header_t *file_headers; // The list of file headers.
 fs_node_t *initrd_root;             // Our root directory node.
 fs_node_t *initrd_dev;              // We also add a directory node for /dev, so we can mount devfs later on.
@@ -12,8 +12,8 @@ struct dirent dirent;
 
 uint32_t initrd_read(fs_node_t *node, uint32_t offset, uint32_t size, uint8_t *buffer){
   initrd_file_header_t header = file_headers[node->inode];
-  if (offset > header.filesize) return 0;
-  if (offset+size > header.filesize) size = header.filesize-offset;
+  if (offset > header.length) return 0;
+  if (offset+size > header.length) size = header.length-offset;
   memcpy(buffer, (uint8_t*) (header.offset+offset), size);
   return size;
 }
@@ -42,8 +42,8 @@ fs_node_t *initrd_finddir(fs_node_t *node, char *name){
 
 fs_node_t* init_initrd(uint32_t location){
   // Initialise the main and file header pointers and populate the root directory.
-  initrd_header = (initrd_hdr_t *)location;
-  file_headers = (initrd_file_header_t *) (location+sizeof(initrd_hdr_t));
+  initrd_header = (initrd_header_t *)location;
+  file_headers = (initrd_file_header_t *) (location+sizeof(initrd_header_t));
 
   // Initialise the root directory.
   initrd_root = (fs_node_t*)malloc(sizeof(fs_node_t));
@@ -84,9 +84,9 @@ fs_node_t* init_initrd(uint32_t location){
     // of memory.
     file_headers[i].offset += location;
     // Create a new file node.
-    strcpy(root_nodes[i].name, file_headers[i].fname);
+    strcpy(root_nodes[i].name, file_headers[i].name);
     root_nodes[i].mask = root_nodes[i].uid = root_nodes[i].gid = 0;
-    root_nodes[i].length = file_headers[i].filesize;
+    root_nodes[i].length = file_headers[i].length;
     root_nodes[i].inode = i;
     root_nodes[i].flags = FS_FILE;
     root_nodes[i].read = &initrd_read;

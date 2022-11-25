@@ -4,19 +4,15 @@
 #include "mem/mm.h"
 #include "fs/fs.h"
 
-typedef char  byte;
-typedef short word;
+typedef struct {
+  uint32_t nfiles; // The number of files in the ramdisk.
+} initrd_header_t;
 
 typedef struct {
-  uint32_t nfiles;
-} initrd_hdr_t;
-
-typedef struct {
-  word magic;   // 0x3377
-  char fname[64];
-  uint32_t offset;
-  uint32_t filesize;
-  byte ending;  // always 0x00
+  uint8_t magic;     // Magic number, for error checking.
+  char name[64];  // Filename.
+  uint32_t offset;   // Offset in the initrd that the file starts.
+  uint32_t length;   // Length of the file.
 } initrd_file_header_t;
 
 fs_node_t* init_initrd(uint32_t location);
