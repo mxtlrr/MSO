@@ -1,24 +1,36 @@
 # MSO
-MSO is a simple operating system. It stands for "MSO's Simple, Obviously"
+A simple operating system. It's not designed to be complicated.
 
 # Compilation
+
+```sh
+# Only run make twice if you've done make clean.
+make && make
 ```
-make
-```
 
+## **Note**
+For now I have not implemented a cross compiler. You need:
+- GCC that supports `gcc -m32`
+- GNU AS that lets you do `as --32`
 
-## Void Linux
+*THIS WILL BE CHANGED IN THE FUTURE!*
 
-### Dependencies
-- `xorriso`
-- `gcc-multilib`
-- `mtools`
-- `make`
-- `nasm`
-- `binutils`
+# Roadmap
 
+## Phase 0: Baby Steps
 
-# Credits
-[abxxbo](https://github.com/abxxbo) for:
-- heap implementation
-- vfs
+- [X] GDT
+- [X] IDT
+- [X] Output library
+  - [X] Debugcon
+  - [X] VGA
+- [X] Memory Manager
+
+## Phase 1: File system
+
+- [X] Initrd
+- [ ] VFS
+  - [X] `fopen()`
+  - [ ] `fread()`
+  - [ ] `fwrite()`
+  - [ ] Get file name.
