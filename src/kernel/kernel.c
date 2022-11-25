@@ -5,7 +5,6 @@
 #include "libc/stdio.h"
 #include "multiboot.h"
 #include "mem/mm.h"
-#include "mem/paging.h"
 
 /* architecture specific stuff */
 #include "arch/gdt.h"
@@ -17,6 +16,7 @@
 /* filesystem */
 #include "fs/fs.h"
 #include "fs/initrd.h"
+
 uint32_t placement_address;
 
 void kmain(multiboot_info_t* mbd, uint32_t magic){
@@ -29,7 +29,6 @@ void kmain(multiboot_info_t* mbd, uint32_t magic){
   init_idt();
 
   // start up our heap
-  setup_pg();
   init_heap(0x10000, 0x10000);
 
   set_colors(0x0, 0x7);
