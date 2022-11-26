@@ -14,6 +14,32 @@ size_t terminal_column;
 uint8_t terminal_color;
 uint16_t* terminal_buffer;
 
+
+size_t get_terminal_row() {
+  return terminal_row;
+}
+
+void set_terminal_row(size_t n){
+  terminal_row = n;
+}
+
+// **************************************
+
+size_t get_terminal_column() {
+  return terminal_column;
+}
+
+void set_terminal_column(size_t n){
+  terminal_column = n;
+}
+void update_cursor(int x, int y){
+	uint16_t pos = y * VGA_WIDTH + x;
+	outb(0x3D4, 0x0F);
+	outb(0x3D5, (uint8_t) (pos & 0xFF));
+	outb(0x3D4, 0x0E);
+	outb(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
+}
+
 size_t strlen(const char* str) {
 	size_t len = 0;
 	while (str[len]) len++;
@@ -149,4 +175,11 @@ void assertSucess(char* successful_expr){
   set_colors(0x0, 0xa);
   printf("The assertion of \"%s\" is true.\n", successful_expr);
   set_colors(0x0, 0x7);
+}
+
+void enable_cursor(uint8_t cursor_start, uint8_t cursor_end){
+	outb(0x3D4, 0x0A);
+	outb(0x3D5, (inb(0x3D5) & 0xC0) | cursor_start);
+	outb(0x3D4, 0x0B);
+	outb(0x3D5, (inb(0x3D5) & 0xE0) | cursor_end);
 }

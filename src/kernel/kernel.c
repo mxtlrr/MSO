@@ -19,6 +19,7 @@
 uint32_t placement_address;
 
 void kmain(multiboot_info_t* mbd, uint32_t magic){
+  enable_cursor(0x0, 0xf);
   fs_node_t* fs_root = 0; // root of fs
 
   printf("Hello world!\n\n");

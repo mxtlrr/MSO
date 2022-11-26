@@ -47,3 +47,12 @@ void move_cursor();
 
 void assertFailed(char* file, int line, char* failed_expr);
 void assertSucess(char* successful_expr);
+
+
+void enable_cursor(uint8_t cursor_start, uint8_t cursor_end);
+
+size_t get_terminal_row();
+void   set_terminal_row(size_t n);
+
+size_t get_terminal_column();
+void   set_terminal_column(size_t n);
