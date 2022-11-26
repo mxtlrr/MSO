@@ -56,3 +56,5 @@ void   set_terminal_row(size_t n);
 
 size_t get_terminal_column();
 void   set_terminal_column(size_t n);
+
+void update_cursor(int x, int y);
