@@ -2,6 +2,10 @@
 
 #define KEY_PRESS_LIM 0x81 // anything < 0x81 is a press
                            // anything > 0x81 is a release.
+#define LIM_X         0x01 // this will probably change
+                           // once a shell is implemented
+                           // but for onow it works perfectly fine
+
 
 const char kbd_table[] ={
 	0, 0, '1', '2',
@@ -69,8 +73,18 @@ void kbd_handle(registers_t r){
         terminal_putchar('\n');
         break;
 
-      // TODO: once we get a shell, we want to implement backspace (for now it doesn't make
-      // sense)
+      // Backspace
+      case 0x8e:
+        asm("nop");
+        size_t f = get_terminal_row();
+        if(!(f < LIM_X)){
+          update_cursor(f-1, get_terminal_column());
+          set_terminal_row(f-1);
+        
+          // TODO: remove the character we are currently on
+        }
+        break;
+
     }
   }
 }
