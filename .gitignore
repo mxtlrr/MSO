@@ -4,3 +4,5 @@ obj/
 
 mso.iso
 initrd.img
+
+.vscode/
