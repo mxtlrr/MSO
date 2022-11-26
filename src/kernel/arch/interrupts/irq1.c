@@ -81,7 +81,9 @@ void kbd_handle(registers_t r){
           update_cursor(f-1, get_terminal_column());
           set_terminal_row(f-1);
         
-          // TODO: remove the character we are currently on
+          putc_at_pos(' ', 0x00, 0x00, --f, get_terminal_column());
+          // show cursor again (bug?)
+          enable_cursor(0, 15); // big
         }
         break;
 
