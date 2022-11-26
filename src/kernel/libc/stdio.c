@@ -183,3 +183,10 @@ void enable_cursor(uint8_t cursor_start, uint8_t cursor_end){
 	outb(0x3D4, 0x0B);
 	outb(0x3D5, (inb(0x3D5) & 0xE0) | cursor_end);
 }
+
+void putc_at_pos(uint8_t c, uint8_t fg, uint8_t bg, int x, int y){
+  uint16_t attrib = (bg << 4) | (fg & 0x0F);
+	volatile uint16_t* where;
+	where = (volatile uint16_t*)0xB8000 + (y * 80 + x) ;
+	*where = c | (attrib << 8);
+}

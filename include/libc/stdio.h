@@ -58,3 +58,5 @@ size_t get_terminal_column();
 void   set_terminal_column(size_t n);
 
 void update_cursor(int x, int y);
+
+void putc_at_pos(uint8_t c, uint8_t fg, uint8_t bg, int x, int y);
